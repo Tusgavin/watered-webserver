@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-// const routes = require()
+const routes = require("../../routes");
 const { port } = require("../env");
 
 app.set("port", port || 1338);
