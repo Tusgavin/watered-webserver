@@ -1,9 +1,10 @@
 const { StatusCodes } = require("http-status-codes");
+const { authValidation } = require("../validations");
 
 module.exports = {
    signup: async (req, res) => {
       try {
-
+         
       } catch (error) {
          console.error(error);
          return res
@@ -18,7 +19,12 @@ module.exports = {
 
    login: async (req, res) => {
       try {
+         await authValidation.loginValidation(req.body);
 
+         const loginResponse = await authService.login(req.body);
+
+         return res.status(StatusCodes.OK).json(loginResponse);
+         
       } catch (error) {
          console.error(error);
          return res
