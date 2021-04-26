@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
          },
+         password: {
+            type: DataTypes.STRING,
+            allowNull: false
+         },
          firstName: {
             type: DataTypes.STRING,
             field: "first_name",
@@ -60,9 +64,12 @@ module.exports = (sequelize, DataTypes) => {
 
    User.prototype.toJSON = function () {
       const user = { ...this.get() };
-      return Object.fromEntries(
+      const o = Object.fromEntries(
          Object.entries(user).filter(([key]) => !["password"].includes(key))
       );
+
+      console.log(o);
+      return o;
    };
 
    return User;
