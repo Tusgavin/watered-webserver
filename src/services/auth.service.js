@@ -20,7 +20,7 @@ module.exports = {
       if (userWithEmail) {
          throw {
             status: StatusCodes.CONFLICT,
-            message: messages.alreadyExists(user, email)
+            message: messages.alreadyExists("user", "email")
          }
       }
 
@@ -28,7 +28,7 @@ module.exports = {
       if (userWithUsername) {
          throw {
             status: StatusCodes.CONFLICT,
-            message: messages.alreadyExists(user, username)
+            message: messages.alreadyExists("user", "username")
          }
       }
 

@@ -30,6 +30,16 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             field: "times_per_cycle"
          },
+         createdAt: {
+            type: DataTypes.DATE,
+            field: "created_at",
+            allowNull: false
+         },
+         updatedAt: {
+            type: DataTypes.DATE,
+            field: "updated_at",
+            allowNull: false
+         }
       },
       {
          tableName: "plants"

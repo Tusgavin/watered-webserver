@@ -1,16 +1,16 @@
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const { StatusCodes } = require("http-status-codes");
-const messages = require("../helpers/messages");
+const { messages } = require("../helpers");
 const { constants } = require("../utils");
-const userRepository = require("../repositories/user.repository");
+const { userRepository } = require("../repositories");
 
 module.exports = async (req, res, next) => {
    try {
       let token;
 
       if (req.headers && req.headers.authorization) {
-         const [schema, credentials] = req.header.authorization.split(" ");
+         const [schema, credentials] = req.headers.authorization.split(" ");
 
          if (schema.match(/^Bearer$/i)) {
             token = credentials;
