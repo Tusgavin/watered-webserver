@@ -43,9 +43,9 @@ module.exports = {
 
    removePlant: async (req, res) => {
       try {
-         await plantValidation.removePlantValidation(req.body);
+         await plantValidation.removePlantValidation(req.query);
 
-         const removePlantResponse = await plantService.removePlant(req.body, req.user);
+         const removePlantResponse = await plantService.removePlant(req.query, req.user);
 
          return res.status(StatusCodes.OK).json(removePlantResponse);
       } catch (error) {
@@ -58,5 +58,22 @@ module.exports = {
             )
             .json(error.message);
       }
-   }
+   },
+
+   listPlant: async (req, res) => {
+      try {
+         const listPlantResponse = await plantService.listPlant(req.query, req.user);
+
+         return res.status(StatusCodes.OK).json(listPlantResponse);
+      } catch (error) {
+         console.error(error);
+         return res
+            .status(
+               error.name === "ValidationError"
+               ? StatusCodes.UNPROCESSABLE_ENTITY
+               : error.status || StatusCodes.INTERNAL_SERVER_ERROR
+            )
+            .json(error.message);
+      }
+   },
 };

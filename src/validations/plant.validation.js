@@ -31,5 +31,15 @@ module.exports = {
       await updatePlantSchema.validate(requestFields, {
          stripUnknown: true
       });
+   },
+
+   removePlantValidation: async (requestFields) => {
+      const removePlantSchema = yup.object().shape({
+         id: yup.number().required()
+      });
+
+      await removePlantSchema.validate(requestFields, {
+         stripUnknown: true
+      });
    }
 };
