@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { plantController } = require("../controllers");
-const isAuthorized = require("../middlewares/isAuthorized");
+const { isAuthorized } = require("../middlewares");
 
 router.use(isAuthorized);
 
