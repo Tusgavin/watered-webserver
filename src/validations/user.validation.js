@@ -1,0 +1,36 @@
+const yup = require("yup");
+const { messages } = require("../helpers");
+
+module.exports = {
+   updateUserValidation: async (requestFields) => {
+      const updateFields = [
+         'email',
+         'firstName',
+         'lastName',
+         'username',
+         'password',
+         'birthdate'
+      ];
+
+      const updateUserSchema = yup.object().shape({
+         id: yup.number().required(),
+         email: yup.string(),
+         firstName: yup.string(),
+         lastName: yup.string(),
+         username: yup.string(),
+         birthdate: yup.string()
+      }).test('at-least-one-field', messages.atLeastOneFieldRequired(updateFields), value => {
+         return !!(
+            value.email
+            || value.firstName
+            || value.lastName
+            || value.username
+            || value.birthdate
+            );
+      });
+
+      await updateUserSchema.validate(requestFields, {
+         stripUnknown: true
+      });
+   }
+};
