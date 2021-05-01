@@ -20,16 +20,8 @@ module.exports = {
 
    updateUser: async (userDetails, requesterDetails) => {
       const requestUserId = requesterDetails.id;
-      const userToBeUpdatedId = userDetails.id;
 
-      if (requestUserId !== userToBeUpdatedId) {
-         throw {
-            status: StatusCodes.UNAUTHORIZED,
-            message: messages.notPermitted()
-         };
-      }
-
-      const userToBeUpdated = await userRepository.getById(userToBeUpdatedId);
+      const userToBeUpdated = await userRepository.getById(requestUserId);
 
       if (!userToBeUpdated) {
          throw {

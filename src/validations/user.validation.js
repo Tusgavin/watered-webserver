@@ -13,7 +13,6 @@ module.exports = {
       ];
 
       const updateUserSchema = yup.object().shape({
-         id: yup.number().required(),
          email: yup.string(),
          firstName: yup.string(),
          lastName: yup.string(),
