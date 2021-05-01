@@ -1,6 +1,13 @@
 version: "3.8"
 
 services:
+   backend:
+      build: .
+      command: npm run start:dev
+      volumes:
+         - .:/usr/app
+      ports:
+         - ${PORT}:${PORT}
    db:
       image: postgres
       environment:
