@@ -41,7 +41,11 @@ module.exports = {
 
    autodeleteUser: async (req, res) => {
       try {
+         await userValidation.autodeleteUserValidation(req.body);
 
+         const autodeleteUserResponse = await userService.autodeleteUser(req.body, req.user);
+
+         return res.status(StatusCodes.OK).json(autodeleteUserResponse);
       } catch (error) {
          console.error(error);
          return res

@@ -8,6 +8,9 @@ services:
          - .:/usr/app
       ports:
          - ${PORT}:${PORT}
+      links:
+         - db
+         - minio
    db:
       image: postgres
       environment:

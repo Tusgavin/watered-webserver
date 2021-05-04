@@ -31,5 +31,15 @@ module.exports = {
       await updateUserSchema.validate(requestFields, {
          stripUnknown: true
       });
+   },
+
+   autodeleteUserValidation: async (requestFields) => {
+      const autodeleteUserSchema = yup.object().shape({
+         password: yup.string().required()
+      });
+
+      await autodeleteUserSchema.validate(requestFields, {
+         stripUnknown: true
+      });
    }
 };
