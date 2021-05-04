@@ -71,7 +71,7 @@ module.exports = {
       };
 
       const sign = promisify(jwt.sign);
-      const token = await sign(payload, constants.jwtToken);
+      const token = await sign(payload, constants.jwtToken, { expiresIn: "10h" });
 
       return {
          email,
