@@ -54,6 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       }
    );
 
+   // Hash password before saving it
    User.beforeSave(async (user, options) => {
       const password = await encryptor.hashPassword(user.password);
       if (user.changed("password")) {
@@ -62,14 +63,12 @@ module.exports = (sequelize, DataTypes) => {
       return user;
    });
 
+   // Does not return password field when getting a user from db
    User.prototype.toJSON = function () {
       const user = { ...this.get() };
-      const o = Object.fromEntries(
+      return Object.fromEntries(
          Object.entries(user).filter(([key]) => !["password"].includes(key))
       );
-
-      console.log(o);
-      return o;
    };
 
    return User;

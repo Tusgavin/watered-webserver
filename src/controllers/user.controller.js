@@ -5,7 +5,9 @@ const { userValidation } = require("../validations");
 module.exports = {
    getUser: async (req, res) => {
       try {
+         const getUserResponse = await userService.getUser(req.user);
 
+         return res.status(StatusCodes.OK).json(getUserResponse);
       } catch (error) {
          console.error(error);
          return res
@@ -39,7 +41,11 @@ module.exports = {
 
    autodeleteUser: async (req, res) => {
       try {
+         await userValidation.autodeleteUserValidation(req.body);
 
+         const autodeleteUserResponse = await userService.autodeleteUser(req.body, req.user);
+
+         return res.status(StatusCodes.OK).json(autodeleteUserResponse);
       } catch (error) {
          console.error(error);
          return res

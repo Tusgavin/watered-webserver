@@ -1,20 +1,27 @@
 const { StatusCodes } = require("http-status-codes");
-const { messages } = require("../helpers");
+const { messages, encryptor } = require("../helpers");
 const { userRepository } = require("../repositories");
 
 module.exports = {
-   updateUser: async (userDetails, requesterDetails) => {
-      const requestUserId = requesterDetails.id;
-      const userToBeUpdatedId = userDetails.id;
+   getUser: async (requesterDetails) => {
+      const requesterUserId = requesterDetails.id;
 
-      if (requestUserId !== userToBeUpdatedId) {
+      const user = await userRepository.getById(requesterUserId);
+
+      if (!user) {
          throw {
-            status: StatusCodes.UNAUTHORIZED,
-            message: messages.notPermitted()
+            status: StatusCodes.NOT_FOUND,
+            message: messages.notFound("user")
          };
       }
 
-      const userToBeUpdated = await userRepository.getById(userToBeUpdatedId);
+      return { user };      
+   },
+
+   updateUser: async (userDetails, requesterDetails) => {
+      const requestUserId = requesterDetails.id;
+
+      const userToBeUpdated = await userRepository.getById(requestUserId);
 
       if (!userToBeUpdated) {
          throw {
@@ -26,5 +33,28 @@ module.exports = {
       const updatedResponse = await userRepository.updateInstance(userToBeUpdated, userDetails);
 
       return { updatedResponse };
+   },
+
+   autodeleteUser: async (confirmationBody, requesterDetails) => {
+      const { password } = confirmationBody;
+      const { id } = requesterDetails;
+
+      const userToBeAutodeleted = await userRepository.getById(id);
+
+      const validPassword = await encryptor.comparePasswords(password, userToBeAutodeleted.password);
+
+      if (!validPassword) {
+         throw {
+            status: StatusCodes.UNAUTHORIZED,
+            message: messages.invalidPassword()
+         }
+      }
+
+      const deleteResponse = await userRepository.deleteInstanceById(id);
+
+      return {
+         message: "User deleted with success",
+         deleteResponse
+      };
    }
 };
