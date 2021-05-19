@@ -3,12 +3,28 @@ version: "3.8"
 services:
    backend:
       build: .
+      image: backend
       command: npm run start:dev
       volumes:
          - .:/usr/app
       ports:
          - ${PORT}:${PORT}
       links:
+         - db
+         - minio
+   backend_tester:
+      image: backend
+      command: npm run test:dev
+      environment:
+         DB_NAME: flora
+         DB_HOST: db
+         DB_USER: flora_adm
+         DB_PASS: segredo99
+         DB_PORT: 5432
+      volumes:
+         - .:/usr/app
+      links:
+         - backend
          - db
          - minio
    db:

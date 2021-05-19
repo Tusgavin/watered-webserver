@@ -1,5 +1,5 @@
 require("dotenv").config();
-const jwtToken = process.env.JWT_TOKEN;
+const jwtToken = `${process.env.JWT_TOKEN}`;
 
 module.exports = {
    jwtToken
