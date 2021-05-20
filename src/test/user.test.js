@@ -14,9 +14,37 @@ process.env.NODE_ENV = "test";
 
 describe('User',() => {
 
-   describe('Multiple tests', () => {
-      it('Tests if the script is working fine', async () => {
-         expect(true).to.equal(true);
+   describe('Get User', () => {
+      it('Lists all users', async () => {
+
       });
-   });   
+   });
+
+   describe('Update User', () => {
+      it('Updates the user if the body has the right fields', async () => {
+
+      });
+
+      it('Returns a Validation Error if the body does not have all the necessary fields', async () => {
+
+      });
+
+      it('Returns a Not Found Error if the user does not exist', async () => {
+
+      });
+   });
+
+   describe('Autoremove User', () => {
+      it('Removes the user if the query has the right fields', async () => {
+
+      });
+
+      it('Returns a Validation Error if the query does not have all the necessary fields', async () => {
+
+      });
+
+      it('Returns an Unauthroized Error if the password passed is wrong', async () => {
+
+      });
+   });
 });
