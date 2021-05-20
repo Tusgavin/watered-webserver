@@ -6,34 +6,112 @@ require('mocha-suppress-logs')();
 
 const { expect } = chai;
 
+const { userRepository } = require('../repositories');
+
 chai.use(chaiHttp)
 
 const app = require('../config/express');
-const db = require('../models');
 
 process.env.NODE_ENV = "test";
 
 describe('Auth',() => {
 
    describe('Sign Up', () => {
-      it('Creates a user if the body has the right fields', () => {
 
+      before(async () => {
+         await userRepository.createNewInstance({
+            "username": "teste1",
+            "firstName": "tester",
+            "lastName": "one",
+            "email": "teste1@teste1.com",
+            "password": "12341234",
+            "birthdate": "02/02/1900"
+         });
       });
 
-      it('Returns a Validation Error if the body does not have all the necessary fields', () => {
-
+      after(async () => {
+         await userRepository.deleteInstanceByEmail('teste1@teste1.com');
       });
 
-      it('Returns a Conflict Error if the username is already registered', () => {
+      it('Creates a user if the body has the right fields', async () => {
+         const testSignup = {
+            "username": "userTestSignup",
+            "firstName": "signupFirst",
+            "lastName": "signupLast",
+            "password": "12341234",
+            "email": "sgnup@sgnup.com",
+            "birthdate": "01/01/1990"
+         };
 
+         const response = await chai.request(app).post('/api/auth/signup').send(testSignup);
+
+         expect(response.status).to.equal(StatusCodes.OK);
+
+         await userRepository.deleteInstanceByEmail('sgnup@sgnup.com');
       });
 
-      it('Returns a Conflict Error if the email is already registered', () => {
+      it('Returns a Validation Error if the body does not have all the necessary fields', async () => {
+         const testSignup = {
+            "username": "testeX",
+            "ftName": "tester",
+            "lastName": "one",
+            "email": "testeX@testeX.com",
+            "password": "12341234",
+            "birthdate": "02/02/1900"
+         };
 
+         const response = await chai.request(app).post('/api/auth/signup').send(testSignup);
+
+         expect(response.status).to.equal(StatusCodes.UNPROCESSABLE_ENTITY);
+      });
+
+      it('Returns a Conflict Error if the username is already registered', async () => {
+         const testSignup = {
+            "username": "teste1",
+            "firstName": "tester",
+            "lastName": "one",
+            "email": "testeY@testeY.com",
+            "password": "12341234",
+            "birthdate": "02/02/1900"
+         };
+
+         const response = await chai.request(app).post('/api/auth/signup').send(testSignup);
+
+         expect(response.status).to.equal(StatusCodes.CONFLICT);
+      });
+
+      it('Returns a Conflict Error if the email is already registered', async () => {
+         const testSignup = {
+            "username": "testeZ",
+            "firstName": "tester",
+            "lastName": "one",
+            "email": "teste1@teste1.com",
+            "password": "12341234",
+            "birthdate": "02/02/1900"
+         };
+
+         const response = await chai.request(app).post('/api/auth/signup').send(testSignup);
+
+         expect(response.status).to.equal(StatusCodes.CONFLICT);
       });
    });
    
    describe('Log In', () => {
+
+      before(async () => {
+         await userRepository.createNewInstance({
+            "username": "teste1",
+            "firstName": "tester",
+            "lastName": "one",
+            "email": "teste1@teste1.com",
+            "password": "12341234",
+            "birthdate": "02/02/1900"
+         });
+      });
+
+      after(async () => {
+         await userRepository.deleteInstanceByEmail('teste1@teste1.com');
+      });
 
       it('Logs into a user if the body has the right fields', async () => {
          const testLogin = {
@@ -43,7 +121,14 @@ describe('Auth',() => {
          
          const response = await chai.request(app).post('/api/auth/login').send(testLogin);
 
+         console.log(response.body);
+         console.log('TESTEEE');
+
          expect(response.status).to.equal(StatusCodes.OK);
+         expect(response.body).to.have.property('email');
+         expect(response.body.email).to.not.equal(null);
+         expect(response.body).to.have.property('token');
+         expect(response.body.token).to.not.equal(null);
       });
 
       it('Returns a Validation Error if the body does not have all the necessary fields', async () => {

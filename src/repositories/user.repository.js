@@ -5,5 +5,6 @@ module.exports = {
    getOneByField: (params) => User.findOne({ where: params }),
    createNewInstance: (params) => User.create(params),
    updateInstance: (user, userDetails) => user.update(userDetails),
-   deleteInstanceById: (id) => User.destroy({ where: { id } })
+   deleteInstanceById: (id) => User.destroy({ where: { id } }),
+   deleteInstanceByEmail: (email) => User.destroy({ where: { email } })
 };
