@@ -20,15 +20,15 @@ module.exports = (sequelize, DataTypes) => {
          species: {
             type: DataTypes.STRING
          },
-         waterCycle: {
-            type: DataTypes.ENUM,
-            values:['DAILY', 'WEEKLY', 'MONTHLY'],
-            field: "water_cycle"
-         },
-         timesPerCycle: {
+         daysBetweenWater: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            field: "times_per_cycle"
+            field: "days_between_water"
+         },
+         lastTimeWater: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            field: "last_time_water"
          },
          createdAt: {
             type: DataTypes.DATE,

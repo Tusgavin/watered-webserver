@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('water_cycle_time', {
+    await queryInterface.createTable('comments', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -19,14 +19,21 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      hour: {
-        type: Sequelize.TIME,
-        allowNull: false,
+      comment: {
+        type: Sequelize.STRING
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        allowNull: false
       }
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('water_cycle_time');
+    await queryInterface.dropTable('comments');
   }
 };

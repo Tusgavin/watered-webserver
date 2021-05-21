@@ -17,19 +17,8 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      first_name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      last_name: {
-        type: Sequelize.STRING
-      },
       email: {
         type: Sequelize.STRING,
-        allowNull: false
-      },
-      birthdate: {
-        type: Sequelize.DATE,
         allowNull: false
       },
       is_admin: {

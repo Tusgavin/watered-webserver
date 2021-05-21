@@ -2,43 +2,41 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('plants', {
+    await queryInterface.createTable('photos_metadata', {
       id: {
-        type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-      },
-      user_id: {
         type: Sequelize.INTEGER,
+      },
+      plant_id: {
         allowNull: false,
+        type: Sequelize.INTEGER,
         references: {
-          model: 'users',
-          key: "id"
+          model: 'plants',
+          key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      species: {
+      photo_name: {
         type: Sequelize.STRING
       },
-      water_cycle: {
-        type: Sequelize.ENUM,
-        allowNull: false,
-        values: ['DAILY', 'WEEKLY', 'MONTHLY']
+      bucket_name: {
+        type: Sequelize.STRING
       },
-      times_per_cycle: {
-        type: Sequelize.INTEGER,
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      updated_at: {
+        type: Sequelize.DATE,
         allowNull: false
       }
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('plants');
+    await queryInterface.dropTable('photos_metadata');
   }
 };
