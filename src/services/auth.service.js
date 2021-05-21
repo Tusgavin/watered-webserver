@@ -9,11 +9,8 @@ module.exports = {
    signup: async (userDetails) => {
       const {
          username,
-         firstName,
-         lastName,
          email,
          password,
-         birthdate
       } = userDetails;
 
       const userWithEmail = await userRepository.getOneByField({ email });
@@ -34,11 +31,8 @@ module.exports = {
 
       const newUser = await userRepository.createNewInstance({
          username,
-         firstName,
-         lastName,
          email,
          password,
-         birthdate
       });
 
       return { newUser };     
