@@ -21,11 +21,8 @@ describe('Auth',() => {
       before(async () => {
          await userRepository.createNewInstance({
             "username": "teste1",
-            "firstName": "tester",
-            "lastName": "one",
             "email": "teste1@teste1.com",
             "password": "12341234",
-            "birthdate": "02/02/1900"
          });
       });
 
@@ -36,11 +33,8 @@ describe('Auth',() => {
       it('Creates a user if the body has the right fields', async () => {
          const testSignup = {
             "username": "userTestSignup",
-            "firstName": "signupFirst",
-            "lastName": "signupLast",
             "password": "12341234",
             "email": "sgnup@sgnup.com",
-            "birthdate": "01/01/1990"
          };
 
          const response = await chai.request(app).post('/api/auth/signup').send(testSignup);
@@ -52,12 +46,9 @@ describe('Auth',() => {
 
       it('Returns a Validation Error if the body does not have all the necessary fields', async () => {
          const testSignup = {
-            "username": "testeX",
-            "ftName": "tester",
-            "lastName": "one",
+            "usrname": "testeX",
             "email": "testeX@testeX.com",
             "password": "12341234",
-            "birthdate": "02/02/1900"
          };
 
          const response = await chai.request(app).post('/api/auth/signup').send(testSignup);
@@ -68,11 +59,8 @@ describe('Auth',() => {
       it('Returns a Conflict Error if the username is already registered', async () => {
          const testSignup = {
             "username": "teste1",
-            "firstName": "tester",
-            "lastName": "one",
             "email": "testeY@testeY.com",
             "password": "12341234",
-            "birthdate": "02/02/1900"
          };
 
          const response = await chai.request(app).post('/api/auth/signup').send(testSignup);
@@ -83,11 +71,8 @@ describe('Auth',() => {
       it('Returns a Conflict Error if the email is already registered', async () => {
          const testSignup = {
             "username": "testeZ",
-            "firstName": "tester",
-            "lastName": "one",
             "email": "teste1@teste1.com",
             "password": "12341234",
-            "birthdate": "02/02/1900"
          };
 
          const response = await chai.request(app).post('/api/auth/signup').send(testSignup);
@@ -101,11 +86,8 @@ describe('Auth',() => {
       before(async () => {
          await userRepository.createNewInstance({
             "username": "teste1",
-            "firstName": "tester",
-            "lastName": "one",
             "email": "teste1@teste1.com",
             "password": "12341234",
-            "birthdate": "02/02/1900"
          });
       });
 
