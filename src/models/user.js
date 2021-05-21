@@ -12,25 +12,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
          },
-         firstName: {
-            type: DataTypes.STRING,
-            field: "first_name",
-            allowNull: false
-         },
-         lastName: {
-            type: DataTypes.STRING,
-            field: "last_name"
-         },
          email: {
             type: DataTypes.STRING,
             allowNull: false
          },
          password: {
             type: DataTypes.STRING,
-            allowNull: false
-         },
-         birthdate: {
-            type: DataTypes.DATE,
             allowNull: false
          },
          isAdmin: {
