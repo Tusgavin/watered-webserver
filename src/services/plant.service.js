@@ -7,8 +7,8 @@ module.exports = {
       const {
          name,
          species,
-         waterCycle,
-         timesPerCycle
+         daysBetweenWater,
+         lastTimeWater
       } = plantDetails;
 
       const { id } = requesterDetails;
@@ -25,8 +25,8 @@ module.exports = {
       const newPlant = await plantRepository.createNewInstance({
          name,
          species,
-         waterCycle,
-         timesPerCycle,
+         daysBetweenWater,
+         lastTimeWater,
          userId: id
       });
 

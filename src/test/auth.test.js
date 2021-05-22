@@ -103,9 +103,6 @@ describe('Auth',() => {
          
          const response = await chai.request(app).post('/api/auth/login').send(testLogin);
 
-         console.log(response.body);
-         console.log('TESTEEE');
-
          expect(response.status).to.equal(StatusCodes.OK);
          expect(response.body).to.have.property('email');
          expect(response.body.email).to.not.equal(null);
